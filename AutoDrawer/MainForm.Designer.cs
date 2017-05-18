@@ -31,18 +31,18 @@
             this.ImportImageButton = new System.Windows.Forms.Button();
             this.SmallPreview = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.SpeedTextbox = new System.Windows.Forms.TextBox();
+            this.SpeedLabel = new System.Windows.Forms.Label();
+            this.StartDrawingFunctionButton = new System.Windows.Forms.Button();
+            this.ResetImageButton = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.PreviewImageButton = new System.Windows.Forms.Button();
+            this.BlackAndWhiteThresholdTextbox = new System.Windows.Forms.TextBox();
             this.SaveChangesButton = new System.Windows.Forms.Button();
             this.ImageWidthTextbox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.ImageHeightTextbox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.PreviewImageButton = new System.Windows.Forms.Button();
-            this.BlackAndWhiteThresholdTextbox = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.ResetImageButton = new System.Windows.Forms.Button();
-            this.StartDrawingFunctionButton = new System.Windows.Forms.Button();
-            this.SpeedLabel = new System.Windows.Forms.Label();
-            this.SpeedTextbox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.SmallPreview)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -87,6 +87,68 @@
             this.panel1.Size = new System.Drawing.Size(508, 153);
             this.panel1.TabIndex = 2;
             // 
+            // SpeedTextbox
+            // 
+            this.SpeedTextbox.Location = new System.Drawing.Point(82, 85);
+            this.SpeedTextbox.Name = "SpeedTextbox";
+            this.SpeedTextbox.Size = new System.Drawing.Size(66, 20);
+            this.SpeedTextbox.TabIndex = 12;
+            // 
+            // SpeedLabel
+            // 
+            this.SpeedLabel.AutoSize = true;
+            this.SpeedLabel.Location = new System.Drawing.Point(3, 88);
+            this.SpeedLabel.Name = "SpeedLabel";
+            this.SpeedLabel.Size = new System.Drawing.Size(44, 13);
+            this.SpeedLabel.TabIndex = 11;
+            this.SpeedLabel.Text = "Speed: ";
+            // 
+            // StartDrawingFunctionButton
+            // 
+            this.StartDrawingFunctionButton.Location = new System.Drawing.Point(6, 113);
+            this.StartDrawingFunctionButton.Name = "StartDrawingFunctionButton";
+            this.StartDrawingFunctionButton.Size = new System.Drawing.Size(257, 34);
+            this.StartDrawingFunctionButton.TabIndex = 10;
+            this.StartDrawingFunctionButton.Text = "Start Drawing Function";
+            this.StartDrawingFunctionButton.UseVisualStyleBackColor = true;
+            this.StartDrawingFunctionButton.Click += new System.EventHandler(this.StartDrawingFunctionButton_Click);
+            // 
+            // ResetImageButton
+            // 
+            this.ResetImageButton.Location = new System.Drawing.Point(154, 30);
+            this.ResetImageButton.Name = "ResetImageButton";
+            this.ResetImageButton.Size = new System.Drawing.Size(109, 25);
+            this.ResetImageButton.TabIndex = 9;
+            this.ResetImageButton.Text = "Reset Image";
+            this.ResetImageButton.UseVisualStyleBackColor = true;
+            this.ResetImageButton.Click += new System.EventHandler(this.ResetImageButton_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 62);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(56, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Brightness";
+            // 
+            // PreviewImageButton
+            // 
+            this.PreviewImageButton.Location = new System.Drawing.Point(154, 82);
+            this.PreviewImageButton.Name = "PreviewImageButton";
+            this.PreviewImageButton.Size = new System.Drawing.Size(109, 25);
+            this.PreviewImageButton.TabIndex = 1;
+            this.PreviewImageButton.Text = "Preview Full Image";
+            this.PreviewImageButton.UseVisualStyleBackColor = true;
+            this.PreviewImageButton.Click += new System.EventHandler(this.PreviewImageButton_Click);
+            // 
+            // BlackAndWhiteThresholdTextbox
+            // 
+            this.BlackAndWhiteThresholdTextbox.Location = new System.Drawing.Point(82, 59);
+            this.BlackAndWhiteThresholdTextbox.Name = "BlackAndWhiteThresholdTextbox";
+            this.BlackAndWhiteThresholdTextbox.Size = new System.Drawing.Size(66, 20);
+            this.BlackAndWhiteThresholdTextbox.TabIndex = 7;
+            // 
             // SaveChangesButton
             // 
             this.SaveChangesButton.Location = new System.Drawing.Point(154, 56);
@@ -129,72 +191,11 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Image Height:";
             // 
-            // PreviewImageButton
-            // 
-            this.PreviewImageButton.Location = new System.Drawing.Point(154, 82);
-            this.PreviewImageButton.Name = "PreviewImageButton";
-            this.PreviewImageButton.Size = new System.Drawing.Size(109, 25);
-            this.PreviewImageButton.TabIndex = 1;
-            this.PreviewImageButton.Text = "Preview Full Image";
-            this.PreviewImageButton.UseVisualStyleBackColor = true;
-            this.PreviewImageButton.Click += new System.EventHandler(this.PreviewImageButton_Click);
-            // 
-            // BlackAndWhiteThresholdTextbox
-            // 
-            this.BlackAndWhiteThresholdTextbox.Location = new System.Drawing.Point(82, 59);
-            this.BlackAndWhiteThresholdTextbox.Name = "BlackAndWhiteThresholdTextbox";
-            this.BlackAndWhiteThresholdTextbox.Size = new System.Drawing.Size(66, 20);
-            this.BlackAndWhiteThresholdTextbox.TabIndex = 7;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 62);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(56, 13);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Brightness";
-            // 
-            // ResetImageButton
-            // 
-            this.ResetImageButton.Location = new System.Drawing.Point(154, 30);
-            this.ResetImageButton.Name = "ResetImageButton";
-            this.ResetImageButton.Size = new System.Drawing.Size(109, 25);
-            this.ResetImageButton.TabIndex = 9;
-            this.ResetImageButton.Text = "Reset Image";
-            this.ResetImageButton.UseVisualStyleBackColor = true;
-            this.ResetImageButton.Click += new System.EventHandler(this.ResetImageButton_Click);
-            // 
-            // StartDrawingFunctionButton
-            // 
-            this.StartDrawingFunctionButton.Location = new System.Drawing.Point(6, 113);
-            this.StartDrawingFunctionButton.Name = "StartDrawingFunctionButton";
-            this.StartDrawingFunctionButton.Size = new System.Drawing.Size(257, 27);
-            this.StartDrawingFunctionButton.TabIndex = 10;
-            this.StartDrawingFunctionButton.Text = "Start Drawing Function";
-            this.StartDrawingFunctionButton.UseVisualStyleBackColor = true;
-            this.StartDrawingFunctionButton.Click += new System.EventHandler(this.StartDrawingFunctionButton_Click);
-            // 
-            // SpeedLabel
-            // 
-            this.SpeedLabel.AutoSize = true;
-            this.SpeedLabel.Location = new System.Drawing.Point(3, 88);
-            this.SpeedLabel.Name = "SpeedLabel";
-            this.SpeedLabel.Size = new System.Drawing.Size(44, 13);
-            this.SpeedLabel.TabIndex = 11;
-            this.SpeedLabel.Text = "Speed: ";
-            // 
-            // SpeedTextbox
-            // 
-            this.SpeedTextbox.Location = new System.Drawing.Point(82, 85);
-            this.SpeedTextbox.Name = "SpeedTextbox";
-            this.SpeedTextbox.Size = new System.Drawing.Size(66, 20);
-            this.SpeedTextbox.TabIndex = 12;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(533, 180);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
