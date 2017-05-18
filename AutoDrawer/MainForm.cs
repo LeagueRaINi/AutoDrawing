@@ -116,15 +116,29 @@ namespace AutoDrawer
             Functions.ClickMouse(MouseButtons.Left, _StartingPosition.X, _StartingPosition.Y, false);
 
             var _Image = new Bitmap(Globals.EditedImage);
-            for (var y = 0; y < _Image.Height; y++)
+
+            var _Size = _Image.Size;
+            var _PixelFormat = _Image.PixelFormat;
+            var _Rectangle = new Rectangle(0, 0, _Size.Width, _Size.Height);
+
+            var _BitmapData = _Image.LockBits(_Rectangle, ImageLockMode.ReadOnly, _PixelFormat);
+
+            const byte _BPP = 4;
+            var _SizeINT = _BitmapData.Stride * _BitmapData.Height;
+            var _Data = new byte[_SizeINT];
+
+            Marshal.Copy(_BitmapData.Scan0, _Data, 0, _SizeINT);
+
+            for (var _Height = 0; _Height < _Size.Height; _Height++)
             {
-                for (var x = 0; x < _Image.Width; x++)
+                for (var _Width = 0; _Width < _Size.Width; _Width++)
                 {
-                    var _Pixels = _Image.GetPixel(x, y);
+                    var _Index = _Height * _BitmapData.Stride + _Width * _BPP;
+                    var _Pixels = Color.FromArgb(_Data[_Index + 3], _Data[_Index + 2], _Data[_Index + 1], _Data[_Index + 0]);
                     if (_Pixels.B != 0) continue;
 
-                    var _DrawX = _StartingPosition.X + x;
-                    var _DrawY = _StartingPosition.Y + y;
+                    var _DrawX = _StartingPosition.X + _Width;
+                    var _DrawY = _StartingPosition.Y + _Height;
                     Functions.MoveMouse(_DrawX, _DrawY);
                     Functions.ClickMouse(MouseButtons.Left, _DrawX, _DrawY, true);
                     Functions.ClickMouse(MouseButtons.Left, _DrawX, _DrawY, false);
