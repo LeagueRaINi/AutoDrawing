@@ -23,12 +23,11 @@ namespace AutoDrawer
             if (_OpenFileDialog.ShowDialog() != DialogResult.OK) return;
 
             var _TempPath = _OpenFileDialog.FileName;
-            if (_TempPath.IsRecognisedImageFile())
-            {
-                Globals.OriginalImage = Image.FromFile(_TempPath);
-                SmallPreview.Image = Functions.ScaleImage(Globals.OriginalImage, SmallPreview.Size.Width, SmallPreview.Size.Height);
-                Globals.EditedImage = Globals.OriginalImage;
-            }
+            if (!_TempPath.IsRecognisedImageFile()) return;
+
+            Globals.OriginalImage = Image.FromFile(_TempPath);
+            Globals.EditedImage = Globals.OriginalImage;
+            SmallPreview.Image = Functions.ScaleImage(Globals.OriginalImage, SmallPreview.Size.Width, SmallPreview.Size.Height);
         }
 
         private void PreviewImageButton_Click(object sender, EventArgs e)
@@ -47,16 +46,16 @@ namespace AutoDrawer
 
         private void SaveChangesButton_Click(object sender, EventArgs e)
         {
-            int _Threshold;
-            if (int.TryParse(BlackAndWhiteThresholdTextbox.Text, out _Threshold))
-            {
-                Globals.EditedImage = Functions.MakeBlackAndWhite(Globals.OriginalImage, _Threshold);
-            }
-
             int _ImageHeight, _ImageWidth;
             if (int.TryParse(ImageHeightTextbox.Text, out _ImageHeight) && int.TryParse(ImageWidthTextbox.Text, out _ImageWidth))
             {
-                Globals.EditedImage = Functions.ScaleImage(Globals.EditedImage, _ImageWidth, _ImageHeight);
+                Globals.EditedImage = Functions.ScaleImage(Globals.OriginalImage, _ImageWidth, _ImageHeight);
+            }
+
+            int _Threshold;
+            if (int.TryParse(BlackAndWhiteThresholdTextbox.Text, out _Threshold))
+            {
+                Globals.EditedImage = Functions.MakeBlackAndWhite(Globals.EditedImage, _Threshold);
             }
 
             if (Globals.EditedImage != null)
@@ -75,30 +74,33 @@ namespace AutoDrawer
         {
             if (Globals.EditedImage == null) return;
 
+            if (!Globals.EditedImage.IsGrayScale())
+            {
+                MessageBox.Show("Set the Brightness first to make it Black and White", "Information", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
             int _Speed;
             if (!int.TryParse(SpeedTextbox.Text, out _Speed)) return;
 
             MessageBox.Show("Press 'D' to start Drawing & 'F' to stop (incase you want to abort before it finishes)");
 
-            while (!Convert.ToBoolean((long)Functions.GetAsyncKeyState(Functions.VK_D) & 0x8000))
+            Task.Factory.StartNew(() =>
             {
-                Thread.Sleep(1);
-            }
-
-            Task.Factory.StartNew(() => Draw(_Speed));
-            Task.Factory.StartNew(Cancel);
-        }
-
-        private static void Cancel()
-        {
-            while (true)
-            {
-                if (Convert.ToBoolean((long)Functions.GetAsyncKeyState(Functions.VK_F) & 0x8000))
+                while (!Convert.ToBoolean((long) Functions.GetAsyncKeyState(Functions.VK_D) & 0x8000))
                 {
-                    _DrawingThread.Abort();
+                    Thread.Sleep(50);
                 }
-                Thread.Sleep(250);
-            }
+
+                Task.Factory.StartNew(() => Draw(_Speed));
+
+                while (!Convert.ToBoolean((long)Functions.GetAsyncKeyState(Functions.VK_F) & 0x8000))
+                {
+                    Thread.Sleep(50);
+                }
+
+                _DrawingThread.Abort();
+            });
         }
 
         private static void Draw(int speed)

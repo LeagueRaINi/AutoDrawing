@@ -99,9 +99,9 @@
             this.SpeedLabel.AutoSize = true;
             this.SpeedLabel.Location = new System.Drawing.Point(3, 88);
             this.SpeedLabel.Name = "SpeedLabel";
-            this.SpeedLabel.Size = new System.Drawing.Size(44, 13);
+            this.SpeedLabel.Size = new System.Drawing.Size(79, 13);
             this.SpeedLabel.TabIndex = 11;
-            this.SpeedLabel.Text = "Speed: ";
+            this.SpeedLabel.Text = "Drawing Delay:";
             // 
             // StartDrawingFunctionButton
             // 
@@ -200,7 +200,7 @@
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "MainForm";
-            this.Text = "Auto Drawer v1";
+            this.Text = "Auto Drawer v2";
             ((System.ComponentModel.ISupportInitialize)(this.SmallPreview)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

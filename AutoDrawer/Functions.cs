@@ -74,6 +74,41 @@ namespace AutoDrawer
         public const int VK_D = 0x44;
         public const int VK_F = 0x46;
 
+        public static bool IsGrayScale(this Image image)
+        {
+            using (var _Bitmap = new Bitmap(image.Width, image.Height, PixelFormat.Format32bppArgb))
+            {
+                using (var _Graphics = Graphics.FromImage(_Bitmap))
+                {
+                    _Graphics.DrawImage(image, 0, 0);
+                }
+
+                var _BitmapData = _Bitmap.LockBits(new Rectangle(0, 0, _Bitmap.Width, _Bitmap.Height), ImageLockMode.ReadOnly, _Bitmap.PixelFormat);
+                const byte _BPP = 4;
+                var _SizeINT = _BitmapData.Stride * _BitmapData.Height;
+                var _Data = new byte[_SizeINT];
+                Marshal.Copy(_BitmapData.Scan0, _Data, 0, _SizeINT);
+
+                var _Result = true;
+                for (var _Height = 0; _Height < image.Size.Height; _Height++)
+                {
+                    for (var _Width = 0; _Width < image.Size.Width; _Width++)
+                    {
+                        var _Index = _Height * _BitmapData.Stride + _Width * _BPP;
+                        var _Pixels = Color.FromArgb(_Data[_Index + 3], _Data[_Index + 2], _Data[_Index + 1], _Data[_Index + 0]);
+                        if (_Pixels.A != 0 && (_Pixels.R != _Pixels.G || _Pixels.G != _Pixels.B))
+                        {
+                            _Result = false;
+                            break;
+                        }
+                    }
+                }
+
+                _Bitmap.UnlockBits(_BitmapData);
+                return _Result;
+            }
+        }
+
         public static Bitmap MakeBlackAndWhite(Image original, int threshold)
         {
             Bitmap _NewImage = new Bitmap(original);
@@ -113,19 +148,11 @@ namespace AutoDrawer
             var _NewHeight = (int)(image.Height * _Ratio);
 
             var _NewImage = new Bitmap(_NewWidth, _NewHeight);
-            using (var graphics = Graphics.FromImage(_NewImage))
+            using (var _Graphics = Graphics.FromImage(_NewImage))
             {
-                graphics.DrawImage(image, 0, 0, _NewWidth, _NewHeight);
+                _Graphics.DrawImage(image, 0, 0, _NewWidth, _NewHeight);
             }
             return _NewImage;
-        }
-
-        public static Stream ToStream(this Image image, ImageFormat format)
-        {
-            var _Stream = new MemoryStream();
-            image.Save(_Stream, format);
-            _Stream.Position = 0;
-            return _Stream;
         }
 
         public static bool IsRecognisedImageFile(this string fileName)
